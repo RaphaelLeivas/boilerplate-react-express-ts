@@ -56,7 +56,7 @@ const MainAppBar = () => {
         },
       }}
     >
-      <Typography color="black">{name}</Typography>
+      <Typography>{name}</Typography>
     </MenuItem>
   );
 
@@ -95,8 +95,8 @@ const MainAppBar = () => {
             sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
           >
             <Box display="flex" flexDirection="column" sx={{ textAlign: 'right' }}>
-              <Typography sx={{ color: 'black' }}>{username}</Typography>
-              <Typography sx={{ color: 'black' }}>Bem-vindo!</Typography>
+              <Typography>{username}</Typography>
+              <Typography>Bem-vindo!</Typography>
             </Box>
             <IconButton size="large" onClick={handleOpenMenu} color="inherit">
               <AccountCircle sx={{ color: 'black' }} />
