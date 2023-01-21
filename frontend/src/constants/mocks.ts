@@ -1,0 +1,42 @@
+export const FAKE_TABLE_DATA = [
+  {
+    id: '1',
+    name: 'Nome 1',
+    email: 'Email 1',
+    phone: 'Phone 1',
+    address: 'Address 1',
+    cpf: 'CPF 1',
+  },
+  {
+    id: '2',
+    name: 'Nome 2',
+    email: 'Email 2',
+    phone: 'Phone 2',
+    address: 'Address 2',
+    cpf: 'CPF 2',
+  },
+  {
+    id: '3',
+    name: 'Nome 3',
+    email: 'Email 3',
+    phone: 'Phone 3',
+    address: 'Address 3',
+    cpf: 'CPF 3',
+  },
+  {
+    id: '4',
+    name: 'Nome 4',
+    email: 'Email 4',
+    phone: 'Phone 4',
+    address: 'Address 4',
+    cpf: 'CPF 4',
+  },
+  {
+    id: '5',
+    name: 'Nome 5',
+    email: 'Email 5',
+    phone: 'Phone 5',
+    address: 'Address 5',
+    cpf: 'CPF 5',
+  },
+];
