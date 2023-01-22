@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MUIDataTable, {
   MUIDataTableOptions,
   MUIDataTableColumn,
@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import GroupIcon from '@mui/icons-material/Group';
 
+import { MainContext } from '../@types';
 import { MUI_DATATABLE_LABELS } from '../constants';
 
 interface DataTableProps {
@@ -36,6 +37,7 @@ const CustomDataTable = ({
   data,
 }: DataTableProps) => {
   const theme = useTheme();
+  const { isMobile } = useContext(MainContext);
 
   const tableOptions: MUIDataTableOptions = {
     textLabels: MUI_DATATABLE_LABELS,
@@ -57,7 +59,7 @@ const CustomDataTable = ({
         <IconButton
           sx={{
             backgroundColor: 'primary.main',
-            ml: 3,
+            ml: isMobile ? 0 : 3,
             transition: 'background 0.3s',
             '&:hover': {
               backgroundColor: 'primary.dark',
@@ -119,7 +121,9 @@ const CustomDataTable = ({
     },
   });
 
-  const TableTitle = () => (
+  const TableTitle = () => isMobile ? (
+    <React.Fragment />
+  ) : (
     <Box display="flex" flexDirection="row" alignItems="center">
       <Typography variant="h5">{title}</Typography>
       <GroupIcon sx={{ ml: 2 }} />

@@ -59,6 +59,13 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
         },
       },
     },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          color: mode === 'light' ? grey[900] : grey[50],
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         head: {

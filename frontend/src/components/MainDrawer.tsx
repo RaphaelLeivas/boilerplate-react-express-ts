@@ -29,13 +29,18 @@ const drawerListIcons: { name: string; route: PagesList; Icon: SvgIconComponent 
 const MainDrawer = () => {
   const navigation = useNavigation();
   const theme = useTheme();
-  const { isDrawerOpen, setIsDrawerOpen } = useContext(MainContext);
+
+  const { isDrawerOpen, setIsDrawerOpen, isMobile } = useContext(MainContext);
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
   };
 
   const handleDrawerClick = (nextPage: PagesList) => {
+    if (isMobile) {
+      setIsDrawerOpen(false);
+    }
+    
     navigation(nextPage);
   };
 

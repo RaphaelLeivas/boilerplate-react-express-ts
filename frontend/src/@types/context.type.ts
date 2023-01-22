@@ -27,6 +27,8 @@ export interface IMainContext {
 
   themeMode: ThemeModes;
   setThemeMode: React.Dispatch<React.SetStateAction<ThemeModes>>;
+
+  isMobile: boolean;
 }
 
 export const MainContext = React.createContext<IMainContext>({} as IMainContext);

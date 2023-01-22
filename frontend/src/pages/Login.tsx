@@ -117,7 +117,6 @@ const Login = () => {
       <Grid
         item
         xs={false}
-        sm={4}
         md={7}
         sx={{
           backgroundImage: `url(${loginImage})`,
@@ -128,7 +127,7 @@ const Login = () => {
           backgroundPosition: 'center',
         }}
       />
-      <Grid item xs={12} sm={8} md={5}>
+      <Grid item xs={12} md={5}>
         <Container maxWidth="xs">
           <Box
             sx={{
@@ -186,14 +185,14 @@ const Login = () => {
                 </Button>
               )}
               <Grid container>
-                <Grid item xs>
+                <Grid item xs={12} sm={6}>
                   <Link href="#" variant="body2">
                     Esqueci minha senha.
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={6}>
                   <Link href="#" variant="body2">
-                    Ainda sem conta? Cadastre-se!
+                    Sem conta? Cadastre-se!
                   </Link>
                 </Grid>
               </Grid>
