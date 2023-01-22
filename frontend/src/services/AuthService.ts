@@ -1,4 +1,4 @@
-class Auth {
+class AuthService {
   // localStorage -> remember me = true
   // sessionStorage -> remember me = false
   storage: Storage = localStorage;
@@ -27,4 +27,4 @@ class Auth {
   getUsername = (): string => this.storage.getItem('username') ?? '';
 }
 
-export default new Auth();
+export default new AuthService();

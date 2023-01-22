@@ -4,4 +4,4 @@ export { INITIAL_FORM_DATA } from './forms.type';
 
 export type { IRandomUser } from './api.type';
 export type { IFormData } from './forms.type';
-export type { SnackbarTypes, SnackbarOptions } from './context.type';
+export type { SnackbarTypes, SnackbarOptions, ThemeModes } from './context.type';

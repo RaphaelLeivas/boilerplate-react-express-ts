@@ -1,9 +1,33 @@
-import { createTheme } from '@mui/material/styles';
-import { red, green } from '@mui/material/colors';
+import { amber, deepOrange, grey } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
+import { ThemeModes } from '../@types'
 
-const theme = createTheme({
+const getTheme = (mode: ThemeModes): ThemeOptions => ({
   palette: {
-    mode: 'light',
+    mode,
+    ...(mode === 'light'
+      ? {
+        // palette values for light mode
+        primary: amber,
+        divider: amber[200],
+        text: {
+          primary: grey[900],
+          secondary: grey[800],
+        },
+      }
+      : {
+        // palette values for dark mode
+        primary: deepOrange,
+        divider: deepOrange[700],
+        background: {
+          default: deepOrange[900],
+          paper: deepOrange[900],
+        },
+        text: {
+          primary: '#fff',
+          secondary: grey[500],
+        },
+      }),
   },
   typography: {
     allVariants: {
@@ -12,15 +36,15 @@ const theme = createTheme({
       fontSize: 14,
     },
   },
-  // components: {
-  //   MuiSvgIcon: {
-  //     styleOverrides: {
-  //       root: {
-  //         color: '#fc6b03',
-  //       },
-  //     },
-  //   },
-  // },
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: '#fc6b03',
+        },
+      },
+    },
+  },
 });
 
-export default theme;
+export default getTheme;

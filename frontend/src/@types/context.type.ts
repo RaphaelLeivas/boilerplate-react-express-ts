@@ -1,5 +1,7 @@
 import React from 'react';
+import { PaletteMode } from '@mui/material';
 
+export type ThemeModes = PaletteMode;
 export type SnackbarTypes = 'success' | 'error' | 'warning' | 'info';
 
 export type SnackbarOptions = {
@@ -22,6 +24,9 @@ export interface IMainContext {
 
   snackbar: SnackbarOptions;
   setSnackbar: React.Dispatch<React.SetStateAction<SnackbarOptions>>;
+
+  mode: ThemeModes;
+  setMode: React.Dispatch<React.SetStateAction<ThemeModes>>;
 }
 
 export const MainContext = React.createContext<IMainContext>({} as IMainContext);
