@@ -1,15 +1,24 @@
-import { amber, deepOrange, grey } from '@mui/material/colors';
+import { grey, red, green, cyan } from '@mui/material/colors';
 import { ThemeOptions } from '@mui/material';
 import { ThemeModes } from '../@types';
+
+const lightThemeColor = cyan
+const darkThemeColor = grey
 
 const getTheme = (mode: ThemeModes): ThemeOptions => ({
   palette: {
     mode,
+    error: red,
+    success: green,
     ...(mode === 'light'
       ? {
           // palette values for light mode
-          primary: amber,
-          divider: amber[200],
+          primary: lightThemeColor,
+          divider: lightThemeColor[200],
+          background: {
+            default: grey[200],
+            paper: lightThemeColor[100],
+          },
           text: {
             primary: grey[900],
             secondary: grey[800],
@@ -17,14 +26,14 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
         }
       : {
           // palette values for dark mode
-          primary: deepOrange,
-          divider: deepOrange[700],
+          primary: darkThemeColor,
+          divider: darkThemeColor[700],
           background: {
-            default: deepOrange[900],
-            paper: deepOrange[900],
+            default: darkThemeColor[900],
+            paper: darkThemeColor[900],
           },
           text: {
-            primary: '#fff',
+            primary: grey[50],
             secondary: grey[500],
           },
         }),
@@ -40,7 +49,7 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: '#fc6b03',
+          color: mode === 'light' ? lightThemeColor[800] : darkThemeColor[50],
         },
       },
     },

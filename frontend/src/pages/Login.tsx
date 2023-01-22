@@ -10,7 +10,6 @@ import Box from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
-import Paper from '@mui/material/Paper';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { useNavigation } from '../navigation';
@@ -129,7 +128,7 @@ const Login = () => {
           backgroundPosition: 'center',
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5}>
         <Container maxWidth="xs">
           <Box
             sx={{
@@ -139,8 +138,8 @@ const Login = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-              <LockOutlinedIcon sx={{ color: 'black' }} />
+            <Avatar sx={{ m: 1 }}>
+              <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Login

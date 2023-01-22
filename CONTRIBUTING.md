@@ -52,3 +52,4 @@ Para parar isso é só remover as tags dele no JSX em `index.tsx`. [Mais info aq
   - siga o link do [Stack Overflow](https://stackoverflow.com/a/37548118/16855638)
   - adaptar o CD para o seu caso (usei 5.0 em vez 3.2 no CD)
   - va no mongo compass e crie o banco local com o nome boilerplate, e crie a collections clients
+- Para determinar a paleta de cores da aplicação, utilize a referência https://mui.com/material-ui/customization/color/ 

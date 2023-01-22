@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/styles';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,6 +35,8 @@ const CustomDataTable = ({
   title,
   data,
 }: DataTableProps) => {
+  const theme = useTheme();
+
   const tableOptions: MUIDataTableOptions = {
     textLabels: MUI_DATATABLE_LABELS,
     selectableRows: 'none',
@@ -53,17 +56,17 @@ const CustomDataTable = ({
       <Tooltip title={title}>
         <IconButton
           sx={{
-            backgroundColor: 'success.main',
+            backgroundColor: 'primary.main',
             ml: 3,
             transition: 'background 0.3s',
             '&:hover': {
-              backgroundColor: 'success.dark',
+              backgroundColor: 'primary.dark',
             },
             p: 1.5,
           }}
           onClick={onAddIconClick}
         >
-          <AddIcon color="success" />
+          <AddIcon sx={{ color: theme.palette.background.paper }} />
         </IconButton>
       </Tooltip>
     ),

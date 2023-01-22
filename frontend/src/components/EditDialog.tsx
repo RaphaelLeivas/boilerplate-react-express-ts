@@ -90,7 +90,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
       onClose={onClose}
       open={open}
       maxWidth="md"
-      PaperProps={{ sx: { bgcolor: '#222222', p: 4 } }}
+      PaperProps={{ sx: { p: 4 } }}
     >
       <Typography variant="h5" sx={{ mb: 2 }}>
         {getTitleByType() + ' '} Cliente
@@ -166,7 +166,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
           )}
 
           <Box component="div" width="100%" display="flex" justifyContent="flex-end" sx={{ mt: 4 }}>
-            <Button color="error" variant="outlined" onClick={onClose}>
+            <Button color="error" variant="contained" onClick={onClose}>
               Cancelar
             </Button>
             <Button type="submit" variant="contained" sx={{ ml: 2 }}>

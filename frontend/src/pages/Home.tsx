@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/styles';
 
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -29,6 +30,7 @@ const MAX_NUMBER_OF_PAGES = 5;
 
 const Home = () => {
   const { setSnackbar } = useContext(MainContext);
+  const theme = useTheme();
 
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<IRandomUser[]>([]);
@@ -147,9 +149,9 @@ const Home = () => {
   //   getNewUsersSeed();
   // }, []);
 
-  // useEffect(() => {
-  //   getNextPage();
-  // }, [currentPage]);
+  useEffect(() => {
+    getNextPage();
+  }, [currentPage]);
 
   const handleChangePage = async (action: 'next' | 'previous') => {
     if (action === 'next') {
@@ -188,7 +190,8 @@ const Home = () => {
         />
         <Button
           variant="contained"
-          startIcon={<RefreshIcon sx={{ color: 'black' }} />}
+          onClick={getNewUsersSeed}
+          startIcon={<RefreshIcon sx={{ color: theme.palette.text.primary }}  />}
           sx={{ mt: { xs: 2, md: 0 } }}
         >
           Novos Usuários
@@ -239,7 +242,6 @@ const Home = () => {
                     sx={{
                       width: '100%',
                       maxWidth: USER_CARD_WIDTH,
-                      bgcolor: '#111111',
                       borderRadius: 8,
                     }}
                   >

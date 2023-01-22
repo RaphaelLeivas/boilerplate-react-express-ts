@@ -71,6 +71,7 @@ const MainAppBar = () => {
         position="static"
         sx={{
           width: `calc(100% - ${isDrawerOpen ? DRAWER_WIDTH : 0}px)`,
+          borderRadius: 0,
           ml: `${isDrawerOpen ? DRAWER_WIDTH : 0}px`,
           transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
@@ -78,10 +79,10 @@ const MainAppBar = () => {
           }),
         }}
       >
-        <Toolbar sx={{ backgroundColor: theme.palette.primary.main }}>
+        <Toolbar sx={{ bgcolor: theme.palette.primary.dark }} >
           {!isDrawerOpen && (
             <IconButton size="large" edge="start" sx={{ mr: 2 }} onClick={hangleToggleDrawer}>
-              <MenuIcon sx={{ color: 'black' }} />
+              <MenuIcon sx={{ color: theme.palette.text.primary }} />
             </IconButton>
           )}
 
@@ -103,8 +104,8 @@ const MainAppBar = () => {
               <Typography>{username}</Typography>
               <Typography>Bem-vindo!</Typography>
             </Box>
-            <IconButton size="large" onClick={handleOpenMenu} color="inherit">
-              <AccountCircleIcon sx={{ color: 'black' }} />
+            <IconButton size="large" onClick={handleOpenMenu}>
+              <AccountCircleIcon sx={{ width: 30, height: 30, color: theme.palette.text.primary }} />
             </IconButton>
 
             <Menu

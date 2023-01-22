@@ -66,7 +66,7 @@ const Dogs = () => {
           >
             <Button
               variant="contained"
-              startIcon={<RefreshIcon sx={{ color: 'black' }} />}
+              startIcon={<RefreshIcon />}
               onClick={getDog}
             >
               Novo Dog
