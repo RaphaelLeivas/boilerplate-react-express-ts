@@ -10,12 +10,13 @@ import Box from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Paper from '@mui/material/Paper';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { useNavigation } from '../navigation';
 import { AuthService, api } from '../services';
 import { MainContext } from '../@types';
+import loginImage from '../assets/login-image.jpg';
 
 interface ILoginFormData {
   username: string;
@@ -113,78 +114,96 @@ const Login = () => {
   useEffect(() => AuthService.logout(), []);
 
   return (
-    <Container maxWidth="xs">
-      <Box
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
         sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          backgroundImage: `url(${loginImage})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-          <LockOutlinedIcon sx={{ color: 'black' }} />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Usuário"
-            name="username"
-            autoFocus
-            value={formData.username}
-            onChange={handleFormDataChange}
-            autoComplete="off"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Senha"
-            type="password"
-            value={formData.password}
-            onChange={handleFormDataChange}
-            autoComplete="off"
-          />
-          <FormControlLabel
-            label="Remember me"
-            control={
-              <Checkbox
-                name="rememberMe"
-                color="primary"
-                checked={formData.rememberMe}
-                onChange={handleFormDataCheck}
-              />
-            }
-          />
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Container maxWidth="xs">
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+              <LockOutlinedIcon sx={{ color: 'black' }} />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               Login
-            </Button>
-          )}
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Esqueci minha senha.
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                Ainda sem conta? Cadastre-se!
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-      <Copyright sx={{ mt: 4, mb: 4 }} />
-    </Container>
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Usuário"
+                name="username"
+                autoFocus
+                value={formData.username}
+                onChange={handleFormDataChange}
+                autoComplete="off"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Senha"
+                type="password"
+                value={formData.password}
+                onChange={handleFormDataChange}
+                autoComplete="off"
+              />
+              <FormControlLabel
+                label="Remember me"
+                control={
+                  <Checkbox
+                    name="rememberMe"
+                    color="primary"
+                    checked={formData.rememberMe}
+                    onChange={handleFormDataCheck}
+                  />
+                }
+              />
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  Login
+                </Button>
+              )}
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Esqueci minha senha.
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    Ainda sem conta? Cadastre-se!
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 4, mb: 4 }} />
+        </Container>
+      </Grid>
+    </Grid>
   );
 };
 
