@@ -28,7 +28,7 @@ const RANDOM_USER_API_NATIONALITIES = 'br,us';
 const MAX_NUMBER_OF_PAGES = 5;
 
 const Home = () => {
-  const { setSnackbar, setMode } = useContext(MainContext);
+  const { setSnackbar } = useContext(MainContext);
 
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<IRandomUser[]>([]);
@@ -159,10 +159,6 @@ const Home = () => {
     }
   };
 
-  const toggleTheme = () => {
-    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-  }
-
   return (
     <>
       <Box
@@ -192,7 +188,6 @@ const Home = () => {
         />
         <Button
           variant="contained"
-          onClick={toggleTheme}
           startIcon={<RefreshIcon sx={{ color: 'black' }} />}
           sx={{ mt: { xs: 2, md: 0 } }}
         >

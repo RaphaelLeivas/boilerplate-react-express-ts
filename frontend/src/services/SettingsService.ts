@@ -9,7 +9,8 @@ class SettingsService {
     localStorage.setItem('language', language);
   };
 
-  getThemeMode = (): ThemeModes => localStorage.getItem('themeMode') === 'light' ? 'light' : 'dark';
+  getThemeMode = (): ThemeModes =>
+    localStorage.getItem('themeMode') === 'light' ? 'light' : 'dark';
 
   getLangauge = (): string => localStorage.getItem('language') ?? '';
 }

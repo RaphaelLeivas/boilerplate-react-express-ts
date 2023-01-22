@@ -12,22 +12,19 @@ import { CustomSnackbar } from './components';
 import { getTheme } from './theme';
 import { SettingsService } from './services';
 
-
 declare module '@mui/styles/defaultTheme' {
-  interface DefaultTheme extends Theme { }
+  interface DefaultTheme extends Theme {}
 }
 
 function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [snackbar, setSnackbar] = useState<SnackbarOptions>(DEFAULT_SNACKBAR_OPTIONS);
-  const [mode, setMode] = React.useState<ThemeModes>(SettingsService.getThemeMode());
+  const [themeMode, setThemeMode] = React.useState<ThemeModes>(SettingsService.getThemeMode());
 
   const theme = useMemo(() => {
-      SettingsService.setThemeMode(mode);
-      return createTheme(getTheme(mode));
-    },
-    [mode],
-  );
+    SettingsService.setThemeMode(themeMode);
+    return createTheme(getTheme(themeMode));
+  }, [themeMode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,8 +36,8 @@ function App() {
           setIsDrawerOpen,
           snackbar,
           setSnackbar,
-          mode,
-          setMode
+          themeMode,
+          setThemeMode,
         }}
       >
         <Routes>

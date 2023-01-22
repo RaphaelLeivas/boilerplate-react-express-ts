@@ -25,8 +25,8 @@ export interface IMainContext {
   snackbar: SnackbarOptions;
   setSnackbar: React.Dispatch<React.SetStateAction<SnackbarOptions>>;
 
-  mode: ThemeModes;
-  setMode: React.Dispatch<React.SetStateAction<ThemeModes>>;
+  themeMode: ThemeModes;
+  setThemeMode: React.Dispatch<React.SetStateAction<ThemeModes>>;
 }
 
 export const MainContext = React.createContext<IMainContext>({} as IMainContext);

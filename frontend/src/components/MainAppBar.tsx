@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
@@ -43,6 +43,11 @@ const MainAppBar = () => {
     setAnchorEl(null);
     AuthService.logout();
     navigation('/login');
+  };
+
+  const handleProfileClick = () => {
+    setAnchorEl(null);
+    navigation('/profile');
   };
 
   const CustomMenuItem = ({ name, onClick }: { name: string; onClick: () => void }) => (
@@ -99,7 +104,7 @@ const MainAppBar = () => {
               <Typography>Bem-vindo!</Typography>
             </Box>
             <IconButton size="large" onClick={handleOpenMenu} color="inherit">
-              <AccountCircle sx={{ color: 'black' }} />
+              <AccountCircleIcon sx={{ color: 'black' }} />
             </IconButton>
 
             <Menu
@@ -116,7 +121,7 @@ const MainAppBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
             >
-              <CustomMenuItem name="Meu Perfil" onClick={handleCloseMenu} />
+              <CustomMenuItem name="Meu Perfil" onClick={handleProfileClick} />
               <CustomMenuItem name="Sair" onClick={handleLogout} />
             </Menu>
           </Box>
