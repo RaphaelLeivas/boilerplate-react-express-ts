@@ -41,8 +41,8 @@ const CustomDataTable = ({
     textLabels: MUI_DATATABLE_LABELS,
     selectableRows: 'none',
     filter: false,
-    viewColumns: false,
-    pagination: false,
+    viewColumns: true,
+    pagination: true,
     responsive: 'standard',
     downloadOptions: {
       filename: `${title}.csv`,
@@ -106,7 +106,7 @@ const CustomDataTable = ({
       download: false,
       print: false,
       customBodyRender: (value, tableMeta) => (
-        <Box display="flex" flexDirection="row" textAlign="center">
+        <Box display="flex" flexDirection="row" textAlign="center" justifyContent="center">
           <IconButton aria-label="Editar" onClick={() => onEditIconClick(tableMeta)}>
             <EditIcon />
           </IconButton>

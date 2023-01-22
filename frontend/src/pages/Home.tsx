@@ -191,7 +191,7 @@ const Home = () => {
         <Button
           variant="contained"
           onClick={getNewUsersSeed}
-          startIcon={<RefreshIcon sx={{ color: theme.palette.text.primary }}  />}
+          startIcon={<RefreshIcon sx={{ color: theme.palette.text.primary }} />}
           sx={{ mt: { xs: 2, md: 0 } }}
         >
           Novos Usuários

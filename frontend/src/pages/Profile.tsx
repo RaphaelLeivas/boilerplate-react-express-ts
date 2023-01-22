@@ -38,12 +38,8 @@ const SpacedInformation = ({ leftInfo, rightInfo }: ISpacedInformation) => (
       mt: 4,
     }}
   >
-    <Typography component="h1" variant="h5">
-      {leftInfo}
-    </Typography>
-    <Typography component="h1" variant="h5">
-      {rightInfo}
-    </Typography>
+    <Typography variant="body2">{leftInfo}</Typography>
+    <Typography variant="body2">{rightInfo}</Typography>
   </Box>
 );
 
@@ -125,9 +121,7 @@ const Profile = () => {
             <Avatar sx={{ m: 1 }}>
               <SettingsIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Configurações
-            </Typography>
+            <Typography variant="h5">Configurações</Typography>
 
             <Box
               width="100%"
@@ -139,9 +133,7 @@ const Profile = () => {
                 mt: 2,
               }}
             >
-              <Typography component="h1" variant="h5">
-                Tema:
-              </Typography>
+              <Typography variant="body1">Tema:</Typography>
               <FormGroup>
                 <FormControlLabel
                   control={<Switch checked={themeMode === 'light' ? true : false} />}

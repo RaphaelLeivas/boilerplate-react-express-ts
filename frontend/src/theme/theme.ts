@@ -2,8 +2,8 @@ import { grey, red, green, cyan } from '@mui/material/colors';
 import { ThemeOptions } from '@mui/material';
 import { ThemeModes } from '../@types';
 
-const lightThemeColor = cyan
-const darkThemeColor = grey
+const lightThemeColor = cyan;
+const darkThemeColor = grey;
 
 const getTheme = (mode: ThemeModes): ThemeOptions => ({
   palette: {
@@ -42,7 +42,6 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
     allVariants: {
       fontFamily: 'Arial',
       textTransform: 'none',
-      fontSize: 14,
     },
   },
   components: {
@@ -50,6 +49,22 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
       styleOverrides: {
         root: {
           color: mode === 'light' ? lightThemeColor[800] : darkThemeColor[50],
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: mode === 'light' ? grey[900] : grey[50],
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          '&:last-child': {
+            textAlign: 'center',
+          },
         },
       },
     },

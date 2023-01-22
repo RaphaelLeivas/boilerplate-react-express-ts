@@ -86,12 +86,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
   }, [getClientDataById]);
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      maxWidth="md"
-      PaperProps={{ sx: { p: 4 } }}
-    >
+    <Dialog onClose={onClose} open={open} maxWidth="md" PaperProps={{ sx: { p: 4 } }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
         {getTitleByType() + ' '} Cliente
       </Typography>

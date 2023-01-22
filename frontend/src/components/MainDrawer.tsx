@@ -16,19 +16,11 @@ import HailIcon from '@mui/icons-material/Hail';
 import HomeIcon from '@mui/icons-material/Home';
 import { SvgIconComponent } from '@mui/icons-material';
 
-import { styled } from '@mui/styles';
+import { useTheme } from '@mui/styles';
 
 import { MainContext } from '../@types';
 import { DRAWER_WIDTH } from '../theme';
 import { useNavigation, PagesList } from '../navigation';
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
 
 const drawerListIcons: { name: string; route: PagesList; Icon: SvgIconComponent }[] = [
   { name: 'Clientes', route: '/clients', Icon: HailIcon },
@@ -36,6 +28,7 @@ const drawerListIcons: { name: string; route: PagesList; Icon: SvgIconComponent 
 
 const MainDrawer = () => {
   const navigation = useNavigation();
+  const theme = useTheme();
   const { isDrawerOpen, setIsDrawerOpen } = useContext(MainContext);
 
   const handleCloseDrawer = () => {
@@ -60,7 +53,15 @@ const MainDrawer = () => {
       anchor="left"
       open={isDrawerOpen}
     >
-      <DrawerHeader>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          ...theme.mixins.toolbar,
+          justifyContent: 'flex-end',
+        }}
+      >
         <ListItem disablePadding onClick={() => handleDrawerClick('/home')}>
           <ListItemButton>
             <ListItemIcon>
@@ -72,7 +73,7 @@ const MainDrawer = () => {
         <IconButton onClick={handleCloseDrawer}>
           <ChevronLeftIcon />
         </IconButton>
-      </DrawerHeader>
+      </Box>
       <Divider />
       <List>
         {drawerListIcons.map(({ name, route, Icon }) => (

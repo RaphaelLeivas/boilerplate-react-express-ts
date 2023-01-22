@@ -51,16 +51,7 @@ const MainAppBar = () => {
   };
 
   const CustomMenuItem = ({ name, onClick }: { name: string; onClick: () => void }) => (
-    <MenuItem
-      onClick={onClick}
-      sx={{
-        background: 'white',
-        '&:hover': {
-          background: theme.palette.primary.dark + '77',
-          transition: '0.2s',
-        },
-      }}
-    >
+    <MenuItem onClick={onClick}>
       <Typography>{name}</Typography>
     </MenuItem>
   );
@@ -79,7 +70,7 @@ const MainAppBar = () => {
           }),
         }}
       >
-        <Toolbar sx={{ bgcolor: theme.palette.primary.dark }} >
+        <Toolbar sx={{ bgcolor: theme.palette.primary.dark }}>
           {!isDrawerOpen && (
             <IconButton size="large" edge="start" sx={{ mr: 2 }} onClick={hangleToggleDrawer}>
               <MenuIcon sx={{ color: theme.palette.text.primary }} />
@@ -105,7 +96,9 @@ const MainAppBar = () => {
               <Typography>Bem-vindo!</Typography>
             </Box>
             <IconButton size="large" onClick={handleOpenMenu}>
-              <AccountCircleIcon sx={{ width: 30, height: 30, color: theme.palette.text.primary }} />
+              <AccountCircleIcon
+                sx={{ width: 30, height: 30, color: theme.palette.text.primary }}
+              />
             </IconButton>
 
             <Menu
