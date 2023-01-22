@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
@@ -45,6 +45,11 @@ const MainAppBar = () => {
     navigation('/login');
   };
 
+  const handleProfileClick = () => {
+    setAnchorEl(null);
+    navigation('/profile');
+  };
+
   const CustomMenuItem = ({ name, onClick }: { name: string; onClick: () => void }) => (
     <MenuItem
       onClick={onClick}
@@ -56,7 +61,7 @@ const MainAppBar = () => {
         },
       }}
     >
-      <Typography color="black">{name}</Typography>
+      <Typography>{name}</Typography>
     </MenuItem>
   );
 
@@ -66,6 +71,7 @@ const MainAppBar = () => {
         position="static"
         sx={{
           width: `calc(100% - ${isDrawerOpen ? DRAWER_WIDTH : 0}px)`,
+          borderRadius: 0,
           ml: `${isDrawerOpen ? DRAWER_WIDTH : 0}px`,
           transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
@@ -73,10 +79,10 @@ const MainAppBar = () => {
           }),
         }}
       >
-        <Toolbar sx={{ backgroundColor: theme.palette.primary.main }}>
+        <Toolbar sx={{ bgcolor: theme.palette.primary.dark }} >
           {!isDrawerOpen && (
             <IconButton size="large" edge="start" sx={{ mr: 2 }} onClick={hangleToggleDrawer}>
-              <MenuIcon sx={{ color: 'black' }} />
+              <MenuIcon sx={{ color: theme.palette.text.primary }} />
             </IconButton>
           )}
 
@@ -95,11 +101,11 @@ const MainAppBar = () => {
             sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
           >
             <Box display="flex" flexDirection="column" sx={{ textAlign: 'right' }}>
-              <Typography sx={{ color: 'black' }}>{username}</Typography>
-              <Typography sx={{ color: 'black' }}>Bem-vindo!</Typography>
+              <Typography>{username}</Typography>
+              <Typography>Bem-vindo!</Typography>
             </Box>
-            <IconButton size="large" onClick={handleOpenMenu} color="inherit">
-              <AccountCircle sx={{ color: 'black' }} />
+            <IconButton size="large" onClick={handleOpenMenu}>
+              <AccountCircleIcon sx={{ width: 30, height: 30, color: theme.palette.text.primary }} />
             </IconButton>
 
             <Menu
@@ -116,7 +122,7 @@ const MainAppBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
             >
-              <CustomMenuItem name="Meu Perfil" onClick={handleCloseMenu} />
+              <CustomMenuItem name="Meu Perfil" onClick={handleProfileClick} />
               <CustomMenuItem name="Sair" onClick={handleLogout} />
             </Menu>
           </Box>

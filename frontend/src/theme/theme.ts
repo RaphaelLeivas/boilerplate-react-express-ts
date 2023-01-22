@@ -1,138 +1,59 @@
-import { createTheme } from '@mui/material/styles';
-import { red, green } from '@mui/material/colors';
+import { grey, red, green, cyan } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
+import { ThemeModes } from '../@types';
 
-const theme = createTheme({
+const lightThemeColor = cyan
+const darkThemeColor = grey
+
+const getTheme = (mode: ThemeModes): ThemeOptions => ({
   palette: {
-    primary: {
-      main: '#fc6b03',
-      dark: '#333333',
-    },
-    secondary: {
-      main: '#03fcf4',
-    },
-    error: {
-      main: red.A400,
-    },
-    success: {
-      main: '#35ff00',
-      dark: green.A200,
-    },
-    text: {
-      primary: '#ffffff',
-      secondary: '#000000',
-    },
-    background: {
-      default: '#222222',
-    },
+    mode,
+    error: red,
+    success: green,
+    ...(mode === 'light'
+      ? {
+          // palette values for light mode
+          primary: lightThemeColor,
+          divider: lightThemeColor[200],
+          background: {
+            default: grey[200],
+            paper: lightThemeColor[100],
+          },
+          text: {
+            primary: grey[900],
+            secondary: grey[800],
+          },
+        }
+      : {
+          // palette values for dark mode
+          primary: darkThemeColor,
+          divider: darkThemeColor[700],
+          background: {
+            default: darkThemeColor[900],
+            paper: darkThemeColor[900],
+          },
+          text: {
+            primary: grey[50],
+            secondary: grey[500],
+          },
+        }),
   },
   typography: {
-    fontFamily: 'sans-serif',
-    fontSize: 14,
     allVariants: {
-      color: '#ffffff',
+      fontFamily: 'Arial',
+      textTransform: 'none',
+      fontSize: 14,
     },
   },
   components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: '#333333',
-        },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        notchedOutline: {
-          borderColor: '#ffffff',
-        },
-      },
-    },
-    MuiTable: {
-      styleOverrides: {
-        stickyHeader: {
-          backgroundColor: '#222222',
-        },
-        root: {
-          backgroundColor: '#222222',
-        },
-      },
-    },
-    MuiToolbar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#222222',
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          backgroundColor: '#222222',
-          paddingTop: 16,
-          paddingBottom: 16,
-          paddingLeft: 0,
-          paddingRight: 0,
-          '&:last-child': {
-            textAlign: 'center',
-          },
-        },
-        root: {
-          padding: 16,
-          '&:last-child': {
-            textAlign: 'center',
-          },
-          borderBottom: '1px solid #555555',
-          backgroundColor: '#222222 !important',
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        textColorInherit: {
-          '&$selected': {
-            color: '#fc6b03',
-          },
-        },
-      },
-    },
-    MuiTabs: {
-      styleOverrides: {
-        indicator: {
-          backgroundColor: '#fc6b03',
-        },
-      },
-    },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: '#fc6b03',
-        },
-      },
-    },
-    MuiSelect: {
-      styleOverrides: {
-        icon: {
-          color: '#fc6b03',
-        },
-      },
-    },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#222222',
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          '&:hover': {
-            backgroundColor: '#ffffff',
-          },
+          color: mode === 'light' ? lightThemeColor[800] : darkThemeColor[50],
         },
       },
     },
   },
 });
 
-export default theme;
+export default getTheme;
