@@ -12,7 +12,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import PetsIcon from '@mui/icons-material/Pets';
 import HailIcon from '@mui/icons-material/Hail';
 import HomeIcon from '@mui/icons-material/Home';
 import { SvgIconComponent } from '@mui/icons-material';
@@ -32,8 +31,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const drawerListIcons: { name: string; route: PagesList; Icon: SvgIconComponent }[] = [
-  { name: 'Dogs', route: '/dogs', Icon: PetsIcon },
-  { name: 'Cats', route: '/cats', Icon: PetsIcon },
   { name: 'Clientes', route: '/clients', Icon: HailIcon },
 ];
 
