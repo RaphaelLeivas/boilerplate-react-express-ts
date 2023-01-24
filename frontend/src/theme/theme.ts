@@ -13,11 +13,17 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
     ...(mode === 'light'
       ? {
           // palette values for light mode
-          primary: lightThemeColor,
+          primary: {
+            light: lightThemeColor[50],
+            main: lightThemeColor[500],
+            dark: lightThemeColor[800],
+            contrastText: grey[900],
+            ...lightThemeColor
+          },
           divider: lightThemeColor[200],
           background: {
             default: grey[200],
-            paper: lightThemeColor[100],
+            paper: lightThemeColor[50],
           },
           text: {
             primary: grey[900],
@@ -26,7 +32,13 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
         }
       : {
           // palette values for dark mode
-          primary: darkThemeColor,
+          primary: {
+            light: darkThemeColor[50],
+            main: darkThemeColor[600],
+            dark: darkThemeColor[800],
+            contrastText: grey[50],
+            ...darkThemeColor
+          },
           divider: darkThemeColor[700],
           background: {
             default: darkThemeColor[900],
@@ -48,7 +60,7 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: mode === 'light' ? lightThemeColor[800] : darkThemeColor[50],
+          color: mode === 'light' ? lightThemeColor[400] : darkThemeColor[600],
         },
       },
     },

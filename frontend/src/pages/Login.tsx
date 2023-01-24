@@ -137,7 +137,7 @@ const Login = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1 }}>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.dark'  }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
