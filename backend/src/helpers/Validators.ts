@@ -25,12 +25,12 @@ const validateClient = (client: typeof ClientSchemaObject) => {
   }
 };
 
-const validateUser = (user: typeof UserSchemaObject) => {
+const validateUser = (user: typeof UserSchemaObject, isEditing = false) => {
   if (!user.username || typeof user.username !== 'string') {
     throw { validationError: 'Nome de usuário válido deve ser informado' };
   }
 
-  if (!user.password || typeof user.password !== 'string') {
+  if (!isEditing && (!user.password || typeof user.password !== 'string')) {
     throw { validationError: 'Senha válida deve ser informada' };
   }
 };

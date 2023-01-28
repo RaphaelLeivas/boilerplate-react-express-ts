@@ -12,7 +12,7 @@ const validationError = (res: Response, message: string, data: any = {}) =>
 const unauthorized = (res: Response, message: string, data: any = {}) =>
   res.status(401).json({ message, data });
 
-const internalError = (res: Response, message: string, data: any = {}) =>
+const internalError = (res: Response, message: string, data: any = {}) => 
   res.status(500).json({ message, data });
 
 export default {

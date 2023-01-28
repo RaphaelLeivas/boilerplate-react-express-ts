@@ -16,9 +16,7 @@ class UsersController extends BaseController {
     data.password = AuthHelper.hashPassword(data.password as string)
   }  
 
-  doBeforeEdit = async (data: typeof UserSchemaObject) => {
-    data.password = AuthHelper.hashPassword(data.password as string)
-  }  
+  getUpdateKeysToSkip = (): string[] => ['password'];
 }
 
 export default new UsersController();

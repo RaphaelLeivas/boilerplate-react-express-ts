@@ -5,10 +5,13 @@ import { capitalizeFirstLetter } from '../utils';
 
 class BaseController {
   protected bodyFields: { [key: string]: any };
-  protected validatorFunction: (modelToCreate: { [key: string]: SchemaType<any> }) => void;
+  protected validatorFunction: (
+    modelToCreate: { [key: string]: SchemaType<any> },
+    isEditing?: boolean
+  ) => void;
   protected Model: Model<any> | null;
 
-  protected modelName: string
+  protected modelName: string // usado para a resposta da API
 
   constructor() {
     this.bodyFields = {};
@@ -38,6 +41,8 @@ class BaseController {
 
   }
 
+  getUpdateKeysToSkip = (): string[] => [];
+
   create = async (req: Request, res: Response) => {
     try {
       const modelToCreate: { [key: string]: any } = {};
@@ -55,6 +60,7 @@ class BaseController {
 
       return ApiResponse.success(res, `${this.getUpperCaseSingular()} adicionado com sucesso`, model);
     } catch (err) {
+      console.error(err);
       if (err.validationError) {
         return ApiResponse.validationError(res, err.validationError, req.body);
       }
@@ -75,6 +81,7 @@ class BaseController {
 
       return ApiResponse.success(res, `Lista de ${this.getLowerCasePlural()} retornada com sucesso`, models);
     } catch (err) {
+      console.error(err);
       return ApiResponse.internalError(
         res,
         `Falha ao buscar lista de ${this.getLowerCasePlural()}: Exception catched`,
@@ -100,6 +107,7 @@ class BaseController {
 
       return ApiResponse.success(res, `${this.getUpperCaseSingular()} retornado com sucesso`, model);
     } catch (err) {
+      console.error(err);
       return ApiResponse.internalError(res, `Falha ao buscar ${this.getLowerCaseSingular()}: Exception catched`, err);
     }
   };
@@ -117,7 +125,7 @@ class BaseController {
           modelToUpdate[key] = req.body[key];
         }
       }
-      this.validatorFunction(modelToUpdate);
+      this.validatorFunction(modelToUpdate, true);
 
       await this.doBeforeEdit(modelToUpdate);
 
@@ -130,8 +138,10 @@ class BaseController {
         return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
       }
 
+      const keysToSkip = this.getUpdateKeysToSkip();
+
       for (const key in modelToUpdate) {
-        if (key in this.bodyFields) {
+        if (key in this.bodyFields && !keysToSkip.includes(key)) {
           model[key] = modelToUpdate[key];
         }
       }
@@ -140,6 +150,7 @@ class BaseController {
 
       return ApiResponse.success(res, `${this.getUpperCaseSingular()} editado com sucesso`, model);
     } catch (err) {
+      console.error(err);
       if (err.validationError) {
         return ApiResponse.validationError(res, err.validationError, req.body);
       }
@@ -169,6 +180,7 @@ class BaseController {
 
       return ApiResponse.success(res, `${this.getUpperCaseSingular()} excluido com sucesso`, model);
     } catch (err) {
+      console.error(err);
       return ApiResponse.internalError(res, `Falha ao excluir ${this.getLowerCaseSingular()}: Exception catched`, err);
     }
   };
