@@ -3,7 +3,7 @@ import { ApiResponse, Validators } from '../helpers';
 import { Model, SchemaType } from 'mongoose';
 import { capitalizeFirstLetter } from '../utils';
 
-class BaseController {
+abstract class BaseController {
   protected bodyFields: { [key: string]: any };
   protected validatorFunction: (
     modelToCreate: { [key: string]: SchemaType<any> },
