@@ -22,4 +22,5 @@ routes.post('/clients', AuthMiddleware.verifyToken, ClientsController.create);
 routes.put('/clients/:_id', AuthMiddleware.verifyToken, ClientsController.updateById);
 routes.delete('/clients/:_id', AuthMiddleware.verifyToken, ClientsController.deleteById);
 
+
 export default routes;

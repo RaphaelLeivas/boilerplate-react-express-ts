@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { UserModel, ClientModel } from '../models';
+import { ClientSchemaObject, UserSchemaObject } from '../models';
 
 const isValidObjectId = (id: string): boolean => mongoose.isValidObjectId(id);
 
-const validateClient = (client: typeof ClientModel.schema.paths) => {
+const validateClient = (client: typeof ClientSchemaObject) => {
   if (!client.name || typeof client.name !== 'string') {
     throw { validationError: 'Nome válido deve ser informado' };
   }
@@ -25,7 +25,7 @@ const validateClient = (client: typeof ClientModel.schema.paths) => {
   }
 };
 
-const validateUser = (user: typeof UserModel.schema.paths) => {
+const validateUser = (user: typeof UserSchemaObject) => {
   if (!user.username || typeof user.username !== 'string') {
     throw { validationError: 'Nome de usuário válido deve ser informado' };
   }

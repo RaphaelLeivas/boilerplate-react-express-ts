@@ -12,4 +12,9 @@ const ClientSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Client', ClientSchema);
+const COLLECTION_NAME = 'clients';
+const ClientModel = mongoose.model('Client', ClientSchema, COLLECTION_NAME);
+
+export const ClientSchemaObject = ClientModel.schema.obj;
+export default ClientModel;
+

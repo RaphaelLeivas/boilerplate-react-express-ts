@@ -1,0 +1,177 @@
+import { Response, Request } from 'express';
+import { ApiResponse, Validators } from '../helpers';
+import { Model, SchemaType } from 'mongoose';
+import { capitalizeFirstLetter } from '../utils';
+
+class BaseController {
+  protected bodyFields: { [key: string]: any };
+  protected validatorFunction: (modelToCreate: { [key: string]: SchemaType<any> }) => void;
+  protected Model: Model<any> | null;
+
+  protected modelName: string
+
+  constructor() {
+    this.bodyFields = {};
+    this.validatorFunction = () => undefined;
+    this.Model = null;
+    this.modelName = ''
+  }
+
+  getUpperCaseSingular = (): string => capitalizeFirstLetter(this.modelName)
+  getLowerCaseSingular = (): string => this.modelName
+  getUpperCasePlural = (): string => capitalizeFirstLetter(this.modelName) + 's'
+  getLowerCasePlural = (): string => this.modelName + 's'
+
+  getModel = () => {
+    if (this.Model === null) {
+      throw new Error('this.Model is null. Must be overriden in derived classes.')
+    }
+    
+    return this.Model
+  }
+
+  doBeforeSave = async (data: { [key: string]: SchemaType<any> }) => {
+
+  }
+
+  doBeforeEdit = async (data: { [key: string]: SchemaType<any> }) => {
+
+  }
+
+  create = async (req: Request, res: Response) => {
+    try {
+      const modelToCreate: { [key: string]: any } = {};
+      for (const key in req.body) {
+        if (key in this.bodyFields) {
+          modelToCreate[key] = req.body[key];
+        }
+      }
+      this.validatorFunction(modelToCreate);
+
+      await this.doBeforeSave(modelToCreate);
+
+      const model = new (this.getModel())(modelToCreate);
+      await model.save();
+
+      return ApiResponse.success(res, `${this.getUpperCaseSingular()} adicionado com sucesso`, model);
+    } catch (err) {
+      if (err.validationError) {
+        return ApiResponse.validationError(res, err.validationError, req.body);
+      }
+      return ApiResponse.internalError(res, `Falha ao criar ${this.getLowerCaseSingular()}: Exception catched`, err);
+    }
+  };
+
+
+  list = async (req: Request, res: Response) => {
+    try {
+      const filter = { active: true };
+      const fields = {};
+      const models = await this.getModel().find(filter, fields);
+
+      if (!models.length) {
+        return ApiResponse.notFound(res, `Nenhum ${this.getLowerCaseSingular()} encontrado`);
+      }
+
+      return ApiResponse.success(res, `Lista de ${this.getLowerCasePlural()} retornada com sucesso`, models);
+    } catch (err) {
+      return ApiResponse.internalError(
+        res,
+        `Falha ao buscar lista de ${this.getLowerCasePlural()}: Exception catched`,
+        err
+      );
+    }
+  };
+
+  getById = async (req: Request, res: Response) => {
+    try {
+      const { _id } = req.params;
+      if (!Validators.isValidObjectId(_id)) {
+        return ApiResponse.validationError(res, 'Id informado na query não é válido', { _id });
+      }
+
+      const filter = { _id };
+      const fields = {};
+      const model = await this.getModel().findOne(filter, fields);
+
+      if (!model) {
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+      }
+
+      return ApiResponse.success(res, `${this.getUpperCaseSingular()} retornado com sucesso`, model);
+    } catch (err) {
+      return ApiResponse.internalError(res, `Falha ao buscar ${this.getLowerCaseSingular()}: Exception catched`, err);
+    }
+  };
+
+  updateById = async (req: Request, res: Response) => {
+    try {
+      const { _id } = req.params;
+      if (!Validators.isValidObjectId(_id)) {
+        return ApiResponse.validationError(res, 'Id informado na query não é válido', { _id });
+      }
+
+      const modelToUpdate: { [key: string]: any } = {};
+      for (const key in req.body) {
+        if (key in this.bodyFields) {
+          modelToUpdate[key] = req.body[key];
+        }
+      }
+      this.validatorFunction(modelToUpdate);
+
+      await this.doBeforeEdit(modelToUpdate);
+
+      const filter = { _id };
+      const fields = {};
+
+      const model = await this.getModel().findOne(filter, fields);
+
+      if (!model) {
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+      }
+
+      for (const key in modelToUpdate) {
+        if (key in this.bodyFields) {
+          model[key] = modelToUpdate[key];
+        }
+      }
+
+      await model.save();
+
+      return ApiResponse.success(res, `${this.getUpperCaseSingular()} editado com sucesso`, model);
+    } catch (err) {
+      if (err.validationError) {
+        return ApiResponse.validationError(res, err.validationError, req.body);
+      }
+      return ApiResponse.internalError(res, `Falha ao editar ${this.getLowerCaseSingular()}: Exception catched`, err);
+    }
+  };
+
+  deleteById = async (req: Request, res: Response) => {
+    try {
+      const { _id } = req.params;
+      if (!Validators.isValidObjectId(_id)) {
+        return ApiResponse.validationError(res, 'Id informado na query não é válido', { _id });
+      }
+
+      const filter = { _id };
+      const fields = {};
+
+      const model = await this.getModel().findOne(filter, fields);
+
+      if (!model) {
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+      }
+
+      model.active = false;
+
+      await model.save();
+
+      return ApiResponse.success(res, `${this.getUpperCaseSingular()} excluido com sucesso`, model);
+    } catch (err) {
+      return ApiResponse.internalError(res, `Falha ao excluir ${this.getLowerCaseSingular()}: Exception catched`, err);
+    }
+  };
+}
+
+export default BaseController;
