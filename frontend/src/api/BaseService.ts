@@ -18,6 +18,10 @@ abstract class BaseService {
     }
   }
 
+  handleBadlyFormattedResponse = () => {
+    throw new Error('Reposta da API mal formatada!');
+  }
+
   create = async (data: Object) => {
     try {
       const token = AuthService.getToken();
@@ -33,7 +37,7 @@ abstract class BaseService {
       const response = await api.get(this.getRouteUrl(), { headers: { 'x-access-token': token } });
 
       if (!response || !response.data || !Array.isArray(response.data.data)) {
-        throw new Error('Reposta da API mal formatada!');
+        this.handleBadlyFormattedResponse();
       }
 
       return response.data.data;
@@ -48,7 +52,7 @@ abstract class BaseService {
       const response = await api.get(`${this.getRouteUrl()}/${_id}`, { headers: { 'x-access-token': token } });
 
       if (!response || !response.data || !response.data.data) {
-        throw new Error('Reposta da API mal formatada!');
+        this.handleBadlyFormattedResponse();
       }
 
       return response.data.data;
@@ -63,7 +67,7 @@ abstract class BaseService {
       const response = await api.put(`${this.getRouteUrl()}/${_id}`, { ...data }, { headers: { 'x-access-token': token } });
 
       if (!response || !response.data || !response.data.data) {
-        throw new Error('Reposta da API mal formatada!');
+        this.handleBadlyFormattedResponse();
       }
 
       return response.data.data;

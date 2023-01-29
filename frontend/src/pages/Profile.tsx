@@ -14,9 +14,8 @@ import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { AuthService } from '../services';
 import { MainContext } from '../@types';
-import { api } from '../api';
+import { LoginService } from '../api';
 
 interface IProfileData {
   username: string;
@@ -46,7 +45,6 @@ const SpacedInformation = ({ leftInfo, rightInfo }: ISpacedInformation) => (
 
 const Profile = () => {
   const { setSnackbar, setThemeMode, themeMode } = useContext(MainContext);
-  const token = AuthService.getToken();
 
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<IProfileData>();
@@ -59,13 +57,7 @@ const Profile = () => {
     try {
       setLoading(true);
 
-      const response = await api.get('profile', { headers: { 'x-access-token': token } });
-
-      if (!response || !response.data) {
-        throw new Error('Reposta da API mal formatada!');
-      }
-
-      const profile = response.data.data;
+      const profile = await LoginService.profile();
       setUserData({
         ...profile,
         createdAt: moment(profile.createdAt).format('DD/MM/YYYY HH:mm'),
@@ -81,7 +73,7 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
-  }, [setSnackbar, token]);
+  }, [setSnackbar]);
 
   useEffect(() => {
     getProfileData();

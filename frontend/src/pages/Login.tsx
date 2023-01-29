@@ -16,7 +16,7 @@ import { useNavigation } from '../navigation';
 import { AuthService } from '../services';
 import { MainContext } from '../@types';
 import loginImage from '../assets/login-image.jpg';
-import { api } from '../api';
+import { LoginService } from '../api';
 
 interface ILoginFormData {
   username: string;
@@ -62,13 +62,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const response = await api.post('login', { ...formData });
-
-      if (!response || !response.data || !response.data.data) {
-        throw new Error('Responsa da API mal formatada');
-      }
-
-      const { token, username } = response.data.data;
+      const { token, username } = await LoginService.login(formData)
 
       AuthService.setUsername(username);
       AuthService.setToken(token);
