@@ -1,5 +1,12 @@
 import express from 'express';
-import { ClientsController, UsersController, AuthController, BaseController } from './controllers';
+import {
+  ClientsController,
+  UsersController,
+  AuthController,
+  BaseController,
+  EquipmentsController,
+  EquipmentTypesController
+} from './controllers';
 import { AuthMiddleware } from './middlewares';
 
 const routes = express.Router();
@@ -18,5 +25,7 @@ routes.get('/profile', AuthMiddleware.verifyToken, AuthController.profile);
 
 createCRUDRoutes('users', UsersController);
 createCRUDRoutes('clients', ClientsController);
+createCRUDRoutes('equipments', EquipmentsController);
+createCRUDRoutes('equipmentTypes', EquipmentTypesController);
 
 export default routes;
