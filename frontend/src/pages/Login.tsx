@@ -13,9 +13,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { useNavigation } from '../navigation';
-import { AuthService, api } from '../services';
+import { AuthService } from '../services';
 import { MainContext } from '../@types';
 import loginImage from '../assets/login-image.jpg';
+import { api } from '../api';
 
 interface ILoginFormData {
   username: string;

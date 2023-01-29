@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { MaskedTextField } from './index';
 import { IFormData, INITIAL_FORM_DATA, MainContext } from '../@types';
-import { api, AuthService } from '../services';
+import { ClientsService } from '../api';
 
 interface EditDialogProps {
   type: 'edit' | 'add' | 'delete';
@@ -21,7 +21,6 @@ interface EditDialogProps {
 
 const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
   const { setSnackbar } = useContext(MainContext);
-  const token = AuthService.getToken();
 
   const [formData, setFormData] = useState<IFormData>(INITIAL_FORM_DATA);
   const [loading, setLoading] = useState(false);
@@ -62,12 +61,8 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
 
     try {
       setLoading(true);
-      const response = await api.get(`clients/${_id}`, { headers: { 'x-access-token': token } });
-      if (!response || !response.data || !response.data.data) {
-        throw new Error('Reposta da API mal formatada!');
-      }
 
-      const fetchedClient = response.data.data;
+      const fetchedClient = await ClientsService.getById(_id);
       setFormData(fetchedClient);
     } catch (error) {
       setSnackbar((prev) => ({
@@ -79,7 +74,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
     } finally {
       setLoading(false);
     }
-  }, [setSnackbar, _id, token]);
+  }, [setSnackbar, _id]);
 
   useEffect(() => {
     getClientDataById();

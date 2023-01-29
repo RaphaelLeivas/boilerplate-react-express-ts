@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { CustomDataTable, EditDialog } from '../components';
-import { api, AuthService } from '../services';
 import { MainContext, IFormData } from '../@types';
+import { ClientsService } from '../api';
 
 const Clients = () => {
   const { setSnackbar } = useContext(MainContext);
-  const token = AuthService.getToken();
 
   const [dialog, setDialog] = useState({
     open: false,
@@ -29,12 +28,7 @@ const Clients = () => {
     try {
       setLoading(true);
 
-      const response = await api.get('clients', { headers: { 'x-access-token': token } });
-      if (!response || !response.data || !Array.isArray(response.data.data)) {
-        throw new Error('Reposta da API mal formatada!');
-      }
-
-      const fetchedClients = response.data.data;
+      const fetchedClients = await ClientsService.list();
       setClients(fetchedClients);
     } catch (error) {
       setSnackbar((prev) => ({
@@ -46,20 +40,16 @@ const Clients = () => {
     } finally {
       setLoading(false);
     }
-  }, [setSnackbar, token]);
+  }, [setSnackbar]);
 
   const handleDialogSave = async (data: IFormData) => {
     try {
       if (dialog.type === 'add') {
-        await api.post('/clients', { ...data }, { headers: { 'x-access-token': token } });
+        await ClientsService.create(data)
       } else if (dialog.type === 'edit' && dialog._id) {
-        await api.put(
-          `/clients/${dialog._id}`,
-          { ...data },
-          { headers: { 'x-access-token': token } }
-        );
+        await ClientsService.updateById(dialog._id, data)
       } else if (dialog.type === 'delete' && dialog._id) {
-        await api.delete(`/clients/${dialog._id}`, { headers: { 'x-access-token': token } });
+        await ClientsService.deleteById(dialog._id)
       }
 
       // atualiza a tabela

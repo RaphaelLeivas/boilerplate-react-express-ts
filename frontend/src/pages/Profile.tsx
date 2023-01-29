@@ -14,8 +14,9 @@ import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { api, AuthService } from '../services';
+import { AuthService } from '../services';
 import { MainContext } from '../@types';
+import { api } from '../api';
 
 interface IProfileData {
   username: string;

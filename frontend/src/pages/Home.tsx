@@ -17,7 +17,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import { api } from '../services';
+import { api } from '../api';
 import { USER_CARD_WIDTH } from '../theme';
 import { IRandomUser, MainContext } from '../@types';
 
