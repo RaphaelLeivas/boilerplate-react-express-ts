@@ -7,29 +7,23 @@ import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { MaskedTextField } from './index';
-import { IFormData, INITIAL_FORM_DATA, MainContext } from '../@types';
-import { ClientsService } from '../api';
+import { MaskedTextField } from '../index';
+import { IClientFormData, INITIAL_CLIENT_FORM_DATA, MainContext } from '../../@types';
+import { ClientsService } from '../../api';
 
 interface EditDialogProps {
   type: 'edit' | 'add' | 'delete';
   open: boolean;
   _id?: string;
-  onClose: () => void;
-  onSave: (data: IFormData) => Promise<void>; // async
+  handleClose: () => void;
+  refreshTable: () => Promise<void>;
 }
 
-const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
+const EditClientDialog = ({ type, open, handleClose, _id, refreshTable }: EditDialogProps) => {
   const { setSnackbar } = useContext(MainContext);
 
-  const [formData, setFormData] = useState<IFormData>(INITIAL_FORM_DATA);
+  const [formData, setFormData] = useState<IClientFormData>(INITIAL_CLIENT_FORM_DATA);
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    await onSave(formData);
-  };
 
   const handleFormDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -38,6 +32,41 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleDialogSave = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      if (type === 'add') {
+        await ClientsService.create(formData);
+      } else if (type === 'edit' && _id) {
+        await ClientsService.updateById(_id, formData);
+      } else if (type === 'delete' && _id) {
+        await ClientsService.deleteById(_id);
+      }
+
+      // atualiza a tabela
+      await refreshTable();
+      handleClose();
+    } catch (error) {
+      let errorMessage = 'Falha ao cadastrar clientes!';
+
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        typeof error.response.data.message === 'string'
+      ) {
+        errorMessage = error.response.data.message;
+      }
+
+      setSnackbar((prev) => ({
+        ...prev,
+        message: errorMessage,
+        type: 'error',
+        open: true,
+      }));
+    }
   };
 
   const getTitleByType = () => {
@@ -55,7 +84,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
 
   const getClientDataById = useCallback(async () => {
     if (!_id) {
-      setFormData(INITIAL_FORM_DATA);
+      setFormData(INITIAL_CLIENT_FORM_DATA);
       return;
     }
 
@@ -81,14 +110,14 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
   }, [getClientDataById]);
 
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="md" PaperProps={{ sx: { p: 4 } }}>
+    <Dialog onClose={handleClose} open={open} maxWidth="md" PaperProps={{ sx: { p: 4 } }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
         {getTitleByType() + ' '} Cliente
       </Typography>
       {loading ? (
         <CircularProgress />
       ) : (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box component="form" onSubmit={handleDialogSave} noValidate>
           {type === 'delete' ? (
             <Typography>
               Deseja mesmo excluir o cliente <b>{formData.name}</b>?
@@ -156,7 +185,7 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
           )}
 
           <Box component="div" width="100%" display="flex" justifyContent="flex-end" sx={{ mt: 4 }}>
-            <Button color="error" variant="contained" onClick={onClose}>
+            <Button color="error" variant="contained" onClick={handleClose}>
               Cancelar
             </Button>
             <Button type="submit" variant="contained" sx={{ ml: 2 }}>
@@ -169,4 +198,4 @@ const EditDialog = ({ type, open, onClose, onSave, _id }: EditDialogProps) => {
   );
 };
 
-export default EditDialog;
+export default EditClientDialog;

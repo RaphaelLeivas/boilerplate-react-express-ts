@@ -1,4 +1,4 @@
-export interface IFormData {
+export interface IClientFormData {
   name: string;
   email: string;
   cpf: string;
@@ -6,10 +6,22 @@ export interface IFormData {
   phone: string;
 }
 
-export const INITIAL_FORM_DATA: IFormData = {
+export interface IEquipmentFormData {
+  serialNumber: string;
+  equipmentTypeId: string;
+  manufacturedAt: string;
+}
+
+export const INITIAL_CLIENT_FORM_DATA: IClientFormData = {
   name: '',
   email: '',
   cpf: '',
   address: '',
   phone: '',
+};
+
+export const INITIAL_EQUIPMENT_FORM_DATA: IEquipmentFormData = {
+  serialNumber: '',
+  manufacturedAt: '',
+  equipmentTypeId: '',
 };

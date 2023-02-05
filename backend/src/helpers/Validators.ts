@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
-import { 
-  ClientSchemaObject, 
-  UserSchemaObject, 
-  EquipmentSchemaObject, 
-  EquipmentTypeSchemaObject 
+import {
+  ClientSchemaObject,
+  UserSchemaObject,
+  EquipmentSchemaObject,
+  EquipmentTypeSchemaObject,
 } from '../models';
 
 const isValidObjectId = (id: string): boolean => mongoose.isValidObjectId(id);
 
-export const isValidDate = (dateObject: Date) => dateObject instanceof Date && !isNaN(dateObject.valueOf());
+export const isValidDate = (dateObject: Date) =>
+  dateObject instanceof Date && !isNaN(dateObject.valueOf());
 
 const validateClient = (client: typeof ClientSchemaObject) => {
   if (!client.name || typeof client.name !== 'string') {
@@ -47,18 +48,16 @@ const validateEquipment = (equipment: typeof EquipmentSchemaObject) => {
     throw { validationError: 'Número de série válido deve ser informado' };
   }
 
-  if (!equipment.manufacteredAt || isNaN(equipment.manufacteredAt as number)) {
-    throw { validationError: 'Data de fabricação válida deve ser informada - formato de milisegundos' };
-  }
-
-  if (isNaN(equipment.status as number)) {
-    throw { validationError: 'Status do equipamento deve ser informado' };
+  if (!equipment.manufacturedAt || isNaN(equipment.manufacturedAt as number)) {
+    throw {
+      validationError: 'Data de fabricação válida deve ser informada - formato de milisegundos',
+    };
   }
 
   if (!equipment.equipmentTypeId || !isValidObjectId(equipment.equipmentTypeId as string)) {
     throw { validationError: 'Id do tipo do equipamento válido deve ser informado' };
   }
-}
+};
 
 const validateEquipmentType = (equipmentType: typeof EquipmentTypeSchemaObject) => {
   if (!equipmentType.name || typeof equipmentType.name !== 'string') {
@@ -72,7 +71,7 @@ const validateEquipmentType = (equipmentType: typeof EquipmentTypeSchemaObject) 
   if (isNaN(equipmentType.price as number)) {
     throw { validationError: 'Preço válido deve ser informado' };
   }
-}
+};
 
 export default {
   isValidObjectId,

@@ -6,3 +6,8 @@ export interface IRandomUser {
   age: number;
   photo: string;
 }
+
+export interface IEquipmentType {
+  name: string;
+  _id: string;
+}

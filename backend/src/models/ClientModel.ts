@@ -17,4 +17,3 @@ const ClientModel = mongoose.model('Client', ClientSchema, COLLECTION_NAME);
 
 export const ClientSchemaObject = ClientModel.schema.obj;
 export default ClientModel;
-

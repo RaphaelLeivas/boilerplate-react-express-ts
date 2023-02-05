@@ -13,8 +13,8 @@ class UsersController extends BaseController {
   }
 
   doBeforeSave = async (data: typeof UserSchemaObject) => {
-    data.password = AuthHelper.hashPassword(data.password as string)
-  }  
+    data.password = AuthHelper.hashPassword(data.password as string);
+  };
 
   getUpdateKeysToSkip = (): string[] => ['password'];
 }

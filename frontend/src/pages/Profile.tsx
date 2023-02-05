@@ -92,7 +92,7 @@ const Profile = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }} >
+            <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
               <AccountCircleIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -111,7 +111,7 @@ const Profile = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.dark'  }}>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
               <SettingsIcon />
             </Avatar>
             <Typography variant="h5">Configurações</Typography>

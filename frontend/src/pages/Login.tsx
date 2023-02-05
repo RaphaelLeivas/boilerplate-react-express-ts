@@ -62,7 +62,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const { token, username } = await LoginService.login(formData)
+      const { token, username } = await LoginService.login(formData);
 
       AuthService.setUsername(username);
       AuthService.setToken(token);
@@ -132,7 +132,7 @@ const Login = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.dark'  }}>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">

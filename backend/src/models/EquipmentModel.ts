@@ -3,11 +3,11 @@ import mongoose, { Schema } from 'mongoose';
 const EquipmentSchema = new Schema(
   {
     serialNumber: { type: String, required: true },
-    manufacteredAt: { type: Date, required: true },
+    manufacturedAt: { type: Date, required: true },
     equipmentTypeId: { type: Schema.Types.ObjectId, required: true },
     clientId: { type: Schema.Types.ObjectId, required: false },
     active: { type: Boolean, default: true },
-    status: { type: Number, enum: [0, 1, 2], required: true },
+    status: { type: Number, enum: [0, 1, 2], required: true, default: 1 },
   },
   { timestamps: true }
 );
@@ -15,7 +15,7 @@ const EquipmentSchema = new Schema(
 export enum EQUIPMENT_STATUS {
   INACTIVE = 0,
   ACTIVE = 1,
-  OUT_OF_SERVICE = 2
+  OUT_OF_SERVICE = 2,
 }
 
 const COLLECTION_NAME = 'equipments';

@@ -1,9 +1,11 @@
 import { AuthService } from '../services';
-import { api } from './api'
+import { api } from './api';
 
 abstract class BaseService {
   getRouteUrl = (): string => {
-    throw Error('getRouteUrl is not implemented in base class. Must be overriden in derived classes.');
+    throw Error(
+      'getRouteUrl is not implemented in base class. Must be overriden in derived classes.'
+    );
   };
 
   handleRequestError = (error: any) => {
@@ -14,13 +16,13 @@ abstract class BaseService {
     } else {
       // se não é erro de token expirado, joga o erro para a prox camada
       console.log(error);
-      throw error
+      throw error;
     }
-  }
+  };
 
   handleBadlyFormattedResponse = () => {
     throw new Error('Reposta da API mal formatada!');
-  }
+  };
 
   create = async (data: Object) => {
     try {
@@ -29,7 +31,7 @@ abstract class BaseService {
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 
   list = async () => {
     try {
@@ -44,12 +46,14 @@ abstract class BaseService {
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 
   getById = async (_id: string) => {
     try {
       const token = AuthService.getToken();
-      const response = await api.get(`${this.getRouteUrl()}/${_id}`, { headers: { 'x-access-token': token } });
+      const response = await api.get(`${this.getRouteUrl()}/${_id}`, {
+        headers: { 'x-access-token': token },
+      });
 
       if (!response || !response.data || !response.data.data) {
         this.handleBadlyFormattedResponse();
@@ -59,12 +63,16 @@ abstract class BaseService {
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 
   updateById = async (_id: string, data: Object) => {
     try {
       const token = AuthService.getToken();
-      const response = await api.put(`${this.getRouteUrl()}/${_id}`, { ...data }, { headers: { 'x-access-token': token } });
+      const response = await api.put(
+        `${this.getRouteUrl()}/${_id}`,
+        { ...data },
+        { headers: { 'x-access-token': token } }
+      );
 
       if (!response || !response.data || !response.data.data) {
         this.handleBadlyFormattedResponse();
@@ -74,7 +82,7 @@ abstract class BaseService {
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 
   deleteById = async (_id: string) => {
     try {
@@ -83,7 +91,7 @@ abstract class BaseService {
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 }
 
 export default BaseService;

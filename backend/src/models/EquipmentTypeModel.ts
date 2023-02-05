@@ -10,7 +10,6 @@ const EquipmentTypeSchema = new Schema(
   { timestamps: true }
 );
 
-
 const COLLECTION_NAME = 'equipmentTypes';
 const EquipmentTypeModel = mongoose.model('EquipmentType', EquipmentTypeSchema, COLLECTION_NAME);
 

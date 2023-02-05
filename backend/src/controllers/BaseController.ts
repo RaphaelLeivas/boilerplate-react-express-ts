@@ -11,36 +11,32 @@ abstract class BaseController {
   ) => void;
   protected Model: Model<any> | null;
 
-  protected modelName: string // usado para a resposta da API
+  protected modelName: string; // usado para a resposta da API
 
   constructor() {
     this.bodyFields = {};
     this.validatorFunction = () => undefined;
     this.Model = null;
 
-    this.modelName = ''
+    this.modelName = '';
   }
 
-  getUpperCaseSingular = (): string => capitalizeFirstLetter(this.modelName)
-  getLowerCaseSingular = (): string => this.modelName
-  getUpperCasePlural = (): string => capitalizeFirstLetter(this.modelName) + 's'
-  getLowerCasePlural = (): string => this.modelName + 's'
+  getUpperCaseSingular = (): string => capitalizeFirstLetter(this.modelName);
+  getLowerCaseSingular = (): string => this.modelName;
+  getUpperCasePlural = (): string => capitalizeFirstLetter(this.modelName) + 's';
+  getLowerCasePlural = (): string => this.modelName + 's';
 
   getModel = () => {
     if (this.Model === null) {
-      throw new Error('this.Model is null. Must be overriden in derived classes.')
+      throw new Error('this.Model is null. Must be overriden in derived classes.');
     }
-    
-    return this.Model
-  }
 
-  doBeforeSave = async (data: { [key: string]: SchemaType<any> }) => {
+    return this.Model;
+  };
 
-  }
+  doBeforeSave = async (data: { [key: string]: SchemaType<any> }) => {};
 
-  doBeforeEdit = async (data: { [key: string]: SchemaType<any> }) => {
-
-  }
+  doBeforeEdit = async (data: { [key: string]: SchemaType<any> }) => {};
 
   getListQuery = async () => {
     const filter = { active: true };
@@ -48,7 +44,7 @@ abstract class BaseController {
     const models = await this.getModel().find(filter, fields);
 
     return models;
-  }
+  };
 
   getQuery = async (_id: string) => {
     const filter = { _id };
@@ -56,15 +52,15 @@ abstract class BaseController {
     const model = await this.getModel().findOne(filter, fields);
 
     return model;
-  }
+  };
 
-  doAfterGet = async (data: { [key: string]: SchemaType<any> }) => { }
-  doAfterGetList = async (data: any[]) => { }
+  doAfterGet = async (data: { [key: string]: SchemaType<any> }) => {};
+  doAfterGetList = async (data: any[]) => {};
 
   getUpdateKeysToSkip = (): string[] => [];
 
-  doCustomGetQuery = (): Object => ({ })
-  doCustomListQuery = (): any[] => []
+  doCustomGetQuery = (): Object => ({});
+  doCustomListQuery = (): any[] => [];
 
   create = async (req: Request, res: Response) => {
     try {
@@ -81,16 +77,23 @@ abstract class BaseController {
       const model = new (this.getModel())(modelToCreate);
       await model.save();
 
-      return ApiResponse.success(res, `${this.getUpperCaseSingular()} adicionado com sucesso`, model);
+      return ApiResponse.success(
+        res,
+        `${this.getUpperCaseSingular()} adicionado com sucesso`,
+        model
+      );
     } catch (err) {
       console.error(err);
       if (err.validationError) {
         return ApiResponse.validationError(res, err.validationError, req.body);
       }
-      return ApiResponse.internalError(res, `Falha ao criar ${this.getLowerCaseSingular()}: Exception catched`, err);
+      return ApiResponse.internalError(
+        res,
+        `Falha ao criar ${this.getLowerCaseSingular()}: Exception catched`,
+        err
+      );
     }
   };
-
 
   list = async (req: Request, res: Response) => {
     try {
@@ -102,7 +105,11 @@ abstract class BaseController {
 
       await this.doAfterGetList(models);
 
-      return ApiResponse.success(res, `Lista de ${this.getLowerCasePlural()} retornada com sucesso`, models);
+      return ApiResponse.success(
+        res,
+        `Lista de ${this.getLowerCasePlural()} retornada com sucesso`,
+        models
+      );
     } catch (err) {
       console.error(err);
       return ApiResponse.internalError(
@@ -123,15 +130,25 @@ abstract class BaseController {
       const model = await this.getQuery(_id);
 
       if (!model) {
-        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, {
+          _id,
+        });
       }
 
       await this.doAfterGet(model);
 
-      return ApiResponse.success(res, `${this.getUpperCaseSingular()} retornado com sucesso`, model);
+      return ApiResponse.success(
+        res,
+        `${this.getUpperCaseSingular()} retornado com sucesso`,
+        model
+      );
     } catch (err) {
       console.error(err);
-      return ApiResponse.internalError(res, `Falha ao buscar ${this.getLowerCaseSingular()}: Exception catched`, err);
+      return ApiResponse.internalError(
+        res,
+        `Falha ao buscar ${this.getLowerCaseSingular()}: Exception catched`,
+        err
+      );
     }
   };
 
@@ -158,7 +175,9 @@ abstract class BaseController {
       const model = await this.getModel().findOne(filter, fields);
 
       if (!model) {
-        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, {
+          _id,
+        });
       }
 
       const keysToSkip = this.getUpdateKeysToSkip();
@@ -177,7 +196,11 @@ abstract class BaseController {
       if (err.validationError) {
         return ApiResponse.validationError(res, err.validationError, req.body);
       }
-      return ApiResponse.internalError(res, `Falha ao editar ${this.getLowerCaseSingular()}: Exception catched`, err);
+      return ApiResponse.internalError(
+        res,
+        `Falha ao editar ${this.getLowerCaseSingular()}: Exception catched`,
+        err
+      );
     }
   };
 
@@ -194,7 +217,9 @@ abstract class BaseController {
       const model = await this.getModel().findOne(filter, fields);
 
       if (!model) {
-        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, { _id });
+        return ApiResponse.notFound(res, `${this.getUpperCaseSingular()} não encontrado pelo id`, {
+          _id,
+        });
       }
 
       model.active = false;
@@ -204,7 +229,11 @@ abstract class BaseController {
       return ApiResponse.success(res, `${this.getUpperCaseSingular()} excluido com sucesso`, model);
     } catch (err) {
       console.error(err);
-      return ApiResponse.internalError(res, `Falha ao excluir ${this.getLowerCaseSingular()}: Exception catched`, err);
+      return ApiResponse.internalError(
+        res,
+        `Falha ao excluir ${this.getLowerCaseSingular()}: Exception catched`,
+        err
+      );
     }
   };
 }

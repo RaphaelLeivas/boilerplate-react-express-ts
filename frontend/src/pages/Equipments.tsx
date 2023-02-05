@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { EditClientDialog } from '../components/dialogs';
+import { EditEquipmentDialog } from '../components/dialogs';
 import { CustomDataTable } from '../components';
 import { MainContext } from '../@types';
-import { ClientsService } from '../api';
+import { EquipmentsService } from '../api';
 
-const Clients = () => {
+const Equipments = () => {
   const { setSnackbar } = useContext(MainContext);
 
   const [dialog, setDialog] = useState({
@@ -15,26 +15,26 @@ const Clients = () => {
     _id: '',
   });
   const [loading, setLoading] = useState(false);
-  const [clients, setClients] = useState([]);
+  const [equipments, setEquipments] = useState([]);
 
-  const clientsTableColumnsList = [
-    { name: 'name', label: 'Nome' },
-    { name: 'email', label: 'Email' },
-    { name: 'phone', label: 'Telefone' },
-    { name: 'address', label: 'Endereço' },
-    { name: 'cpf', label: 'CPF' },
+  const equipmentsTableColumnsList = [
+    { name: 'serialNumber', label: 'Serial' },
+    { name: 'equipmentTypeName', label: 'Modelo' },
+    { name: 'manufacturedAt', label: 'Data de Fabricação' },
+    { name: 'status', label: 'Status' },
+    { name: 'equipmentTypePrice', label: 'Preço do Modelo' },
   ];
 
-  const getClients = useCallback(async () => {
+  const getEquipments = useCallback(async () => {
     try {
       setLoading(true);
 
-      const fetchedClients = await ClientsService.list();
-      setClients(fetchedClients);
+      const fetchedEquipments = await EquipmentsService.list();
+      setEquipments(fetchedEquipments);
     } catch (error) {
       setSnackbar((prev) => ({
         ...prev,
-        message: 'Falha ao buscar clientes!',
+        message: 'Falha ao buscar equipamentos!',
         type: 'error',
         open: true,
       }));
@@ -44,8 +44,8 @@ const Clients = () => {
   }, [setSnackbar]);
 
   useEffect(() => {
-    getClients();
-  }, [getClients]);
+    getEquipments();
+  }, [getEquipments]);
 
   return (
     <>
@@ -53,9 +53,9 @@ const Clients = () => {
         <CircularProgress />
       ) : (
         <CustomDataTable
-          title="Clientes"
-          data={clients}
-          columns={clientsTableColumnsList}
+          title="Equipamentos"
+          data={equipments}
+          columns={equipmentsTableColumnsList}
           onAddIconClick={() => setDialog({ type: 'add', open: true, _id: '' })}
           onEditIconClick={(tableMeta) =>
             setDialog({ type: 'edit', open: true, _id: tableMeta.rowData[0] })
@@ -66,15 +66,15 @@ const Clients = () => {
         />
       )}
 
-      <EditClientDialog
+      <EditEquipmentDialog
         _id={dialog._id}
         type={dialog.type}
         open={dialog.open}
         handleClose={() => setDialog((prev) => ({ ...prev, open: false }))}
-        refreshTable={getClients}
+        refreshTable={getEquipments}
       />
     </>
   );
 };
 
-export default Clients;
+export default Equipments;

@@ -5,7 +5,7 @@ import {
   AuthController,
   BaseController,
   EquipmentsController,
-  EquipmentTypesController
+  EquipmentTypesController,
 } from './controllers';
 import { AuthMiddleware } from './middlewares';
 
@@ -17,7 +17,7 @@ const createCRUDRoutes = (routeName: string, Controller: BaseController) => {
   routes.post(`/${routeName}`, AuthMiddleware.verifyToken, Controller.create);
   routes.put(`/${routeName}/:_id`, AuthMiddleware.verifyToken, Controller.updateById);
   routes.delete(`/${routeName}/:_id`, AuthMiddleware.verifyToken, Controller.deleteById);
-}
+};
 
 // login routes
 routes.post('/login', AuthController.login);

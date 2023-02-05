@@ -1,1 +1,1 @@
-export { capitalizeFirstLetter } from './formatters'
+export { capitalizeFirstLetter } from './formatters';

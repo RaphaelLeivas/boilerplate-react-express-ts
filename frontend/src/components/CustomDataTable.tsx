@@ -121,14 +121,15 @@ const CustomDataTable = ({
     },
   });
 
-  const TableTitle = () => isMobile ? (
-    <React.Fragment />
-  ) : (
-    <Box display="flex" flexDirection="row" alignItems="center">
-      <Typography variant="h5">{title}</Typography>
-      <GroupIcon sx={{ ml: 2 }} />
-    </Box>
-  );
+  const TableTitle = () =>
+    isMobile ? (
+      <React.Fragment />
+    ) : (
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <Typography variant="h5">{title}</Typography>
+        <GroupIcon sx={{ ml: 2 }} />
+      </Box>
+    );
 
   return (
     <MUIDataTable

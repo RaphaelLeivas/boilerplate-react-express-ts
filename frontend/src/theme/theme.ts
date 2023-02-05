@@ -18,7 +18,7 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
             main: lightThemeColor[500],
             dark: lightThemeColor[800],
             contrastText: grey[900],
-            ...lightThemeColor
+            ...lightThemeColor,
           },
           divider: lightThemeColor[200],
           background: {
@@ -37,7 +37,7 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
             main: darkThemeColor[600],
             dark: darkThemeColor[800],
             contrastText: grey[50],
-            ...darkThemeColor
+            ...darkThemeColor,
           },
           divider: darkThemeColor[700],
           background: {
@@ -81,6 +81,7 @@ const getTheme = (mode: ThemeModes): ThemeOptions => ({
     MuiTableCell: {
       styleOverrides: {
         head: {
+          paddingLeft: 0,
           '&:last-child': {
             textAlign: 'center',
           },

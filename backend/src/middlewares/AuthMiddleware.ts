@@ -33,13 +33,9 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     if (error && error.name === 'TokenExpiredError') {
-      return ApiResponse.unauthorized(
-        res,
-        'Token de autorização expirado.',
-        error
-      );
+      return ApiResponse.unauthorized(res, 'Token de autorização expirado.', error);
     }
-    
+
     return ApiResponse.internalError(
       res,
       'Falha no middleware de autorização (verifyToken): Exception catched',

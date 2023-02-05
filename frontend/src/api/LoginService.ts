@@ -1,6 +1,6 @@
-import { api } from "./api";
-import BaseService from "./BaseService";
-import { AuthService } from "../services";
+import { api } from './api';
+import BaseService from './BaseService';
+import { AuthService } from '../services';
 
 class LoginService extends BaseService {
   getRouteUrl = (): string => {
@@ -15,25 +15,25 @@ class LoginService extends BaseService {
       this.handleBadlyFormattedResponse();
     }
 
-    const { username, token } = response.data.data
+    const { username, token } = response.data.data;
     return { username, token };
-  }
+  };
 
   profile = async () => {
     try {
       const token = AuthService.getToken();
       const response = await api.get('profile', { headers: { 'x-access-token': token } });
-  
+
       if (!response || !response.data) {
         this.handleBadlyFormattedResponse();
       }
-  
+
       const profile = response.data.data;
       return profile;
     } catch (error) {
       this.handleRequestError(error);
     }
-  }
+  };
 }
 
 export default new LoginService();

@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HailIcon from '@mui/icons-material/Hail';
+import DevicesIcon from '@mui/icons-material/Devices';
 import HomeIcon from '@mui/icons-material/Home';
 import { SvgIconComponent } from '@mui/icons-material';
 
@@ -24,6 +25,7 @@ import { useNavigation, PagesList } from '../navigation';
 
 const drawerListIcons: { name: string; route: PagesList; Icon: SvgIconComponent }[] = [
   { name: 'Clientes', route: '/clients', Icon: HailIcon },
+  { name: 'Equipamentos', route: '/equipments', Icon: DevicesIcon },
 ];
 
 const MainDrawer = () => {
@@ -40,7 +42,7 @@ const MainDrawer = () => {
     if (isMobile) {
       setIsDrawerOpen(false);
     }
-    
+
     navigation(nextPage);
   };
 
